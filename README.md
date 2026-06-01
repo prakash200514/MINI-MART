@@ -17,6 +17,11 @@ Product Search
 Product Filters
 Product Details Page
 
+Shopping Cart
+Add to Cart
+Update Quantity
+Remove Items
+View Cart Summary
 
 
 
