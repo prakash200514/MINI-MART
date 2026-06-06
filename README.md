@@ -19,7 +19,3 @@ Product Details Page
 
 Shopping Cart
 Add to Cart
-Update 
-
-
-
