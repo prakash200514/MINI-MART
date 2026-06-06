@@ -19,8 +19,7 @@ Product Details Page
 
 Shopping Cart
 Add to Cart
-Update Quantity
-
+Update 
 
 
 
