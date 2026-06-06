@@ -18,4 +18,3 @@ Product Filters
 Product Details Page
 
 Shopping Cart
-Add to
