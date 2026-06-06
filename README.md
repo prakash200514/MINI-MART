@@ -17,4 +17,4 @@ Product Search
 Product Filters
 Product Details Page
 
-Shopping Cart
+Shopping 
