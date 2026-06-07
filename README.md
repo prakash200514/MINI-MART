@@ -7,5 +7,4 @@ MiniMart Pro is a web-based supermarket management system developed using HTML, 
 User Authentication
 User Registration
 User Login
-Forgot 
 
