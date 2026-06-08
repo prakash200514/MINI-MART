@@ -44,6 +44,47 @@
   animation: float 6s ease-in-out infinite reverse;
 }
 
+/* ── Floating vegetable particles ── */
+.hero__veggies {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero__veggie {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0;
+  animation: vegFloat var(--dur, 9s) ease-in-out var(--delay, 0s) infinite;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+  user-select: none;
+}
+
+@keyframes vegFloat {
+  0%   { opacity: 0;    transform: translateY(110%) rotate(var(--r0, -15deg)) scale(0.7); }
+  10%  { opacity: 0.55; }
+  50%  { opacity: 0.7;  transform: translateY(30%)  rotate(var(--r1,  15deg)) scale(1);   }
+  90%  { opacity: 0.4; }
+  100% { opacity: 0;    transform: translateY(-20%) rotate(var(--r2, -20deg)) scale(0.8); }
+}
+
+/* Individual veggie positions & timings */
+.hero__veggie--v1  { left: 5%;  --dur: 10s; --delay: 0s;    --r0: -20deg; --r1: 10deg;  --r2: -15deg; font-size: 2.6rem; }
+.hero__veggie--v2  { left: 15%; --dur: 8s;  --delay: 1.2s;  --r0:  10deg; --r1:-10deg;  --r2:  20deg; font-size: 2rem;   }
+.hero__veggie--v3  { left: 25%; --dur: 11s; --delay: 0.5s;  --r0: -12deg; --r1: 18deg;  --r2: -10deg; font-size: 2.4rem; }
+.hero__veggie--v4  { left: 38%; --dur: 9s;  --delay: 2.1s;  --r0:  15deg; --r1:-20deg;  --r2:  10deg; font-size: 2.8rem; }
+.hero__veggie--v5  { left: 50%; --dur: 12s; --delay: 0.8s;  --r0: -18deg; --r1:  8deg;  --r2: -22deg; font-size: 2.2rem; }
+.hero__veggie--v6  { left: 60%; --dur: 7.5s;--delay: 3s;    --r0:  20deg; --r1:-12deg;  --r2:  18deg; font-size: 2rem;   }
+.hero__veggie--v7  { left: 70%; --dur: 10s; --delay: 1.5s;  --r0: -10deg; --r1: 22deg;  --r2: -8deg;  font-size: 2.4rem; }
+.hero__veggie--v8  { left: 80%; --dur: 8.5s;--delay: 0.3s;  --r0:  12deg; --r1:-15deg;  --r2:  20deg; font-size: 2rem;   }
+.hero__veggie--v9  { left: 88%; --dur: 11s; --delay: 2.5s;  --r0: -25deg; --r1: 10deg;  --r2: -18deg; font-size: 2.6rem; }
+.hero__veggie--v10 { left: 93%; --dur: 9.5s;--delay: 4s;    --r0:  18deg; --r1:-22deg;  --r2:  15deg; font-size: 2.2rem; }
+.hero__veggie--v11 { left: 45%; --dur: 13s; --delay: 5s;    --r0: -14deg; --r1: 16deg;  --r2: -12deg; font-size: 2.8rem; }
+.hero__veggie--v12 { left: 8%;  --dur: 8s;  --delay: 6s;    --r0:  22deg; --r1:-18deg;  --r2:  25deg; font-size: 2rem;   }
+
+
 /* Background image with overlay */
 .hero__img-overlay {
   position: absolute;

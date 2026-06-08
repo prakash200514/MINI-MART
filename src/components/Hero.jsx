@@ -82,6 +82,26 @@ export default function Hero() {
       <div className="hero__blob hero__blob--1" style={{ background: slide.accent }} />
       <div className="hero__blob hero__blob--2" />
 
+      {/* Floating vegetable particles */}
+      <div className="hero__veggies" aria-hidden="true">
+        {[
+          { emoji: '🥦', cls: 'v1' },
+          { emoji: '🍅', cls: 'v2' },
+          { emoji: '🥕', cls: 'v3' },
+          { emoji: '🌽', cls: 'v4' },
+          { emoji: '🥑', cls: 'v5' },
+          { emoji: '🍋', cls: 'v6' },
+          { emoji: '🫑', cls: 'v7' },
+          { emoji: '🍇', cls: 'v8' },
+          { emoji: '🧅', cls: 'v9' },
+          { emoji: '🍓', cls: 'v10' },
+          { emoji: '🥬', cls: 'v11' },
+          { emoji: '🍊', cls: 'v12' },
+        ].map(({ emoji, cls }) => (
+          <span key={cls} className={`hero__veggie hero__veggie--${cls}`}>{emoji}</span>
+        ))}
+      </div>
+
       {/* Hero Image overlay */}
       <div className="hero__img-overlay">
         <img
