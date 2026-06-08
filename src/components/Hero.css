@@ -105,12 +105,14 @@
 .hero__inner {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
   padding-top: 40px;
   padding-bottom: 80px;
+  max-width: 700px;
 }
 
 /* Content */
