@@ -132,34 +132,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right visual */}
-        <div className="hero__visual animate-float">
-          <div className="hero__product-card">
-            <div className="hero__product-img">
-              <img src="/fresh_produce.png" alt="Fresh produce" />
-            </div>
-            <div className="hero__product-info">
-              <p className="hero__product-label">Today's Fresh Pick</p>
-              <p className="hero__product-name">Organic Veggie Bundle</p>
-              <div className="hero__product-price">
-                <span className="price-current">₹299</span>
-                <span className="price-original">₹499</span>
-                <span className="price-badge">40% OFF</span>
-              </div>
-              <button className="btn btn-primary btn-sm" id="hero-product-add-cart">
-                Add to Cart 🛒
-              </button>
-            </div>
-          </div>
 
-          {/* Floating tags */}
-          <div className="hero__float-tag hero__float-tag--1">
-            <span>✅</span> Fresh Today
-          </div>
-          <div className="hero__float-tag hero__float-tag--2">
-            <span>🚚</span> Free Delivery
-          </div>
-        </div>
       </div>
 
       {/* Slider controls */}
