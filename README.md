@@ -1,3 +1,2 @@
 #🛒 MiniMart Pro - Supermarket Management System
-
-MiniMart Pro is a web-based supermarket management system developed 
+MiniMart Pro is a web-based supermarket management system
