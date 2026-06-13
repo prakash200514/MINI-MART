@@ -16,6 +16,14 @@ const slides = [
     ],
     accent: '#22c55e',
     bg: 'linear-gradient(135deg, #064e3b 0%, #065f46 30%, #047857 60%, #059669 100%)',
+    productImg: '/organic_basket.png',
+    productLabel: 'Organic Freshness',
+    productName: 'Vibrant Veggie Basket',
+    productPrice: '₹499',
+    productOriginal: '₹699',
+    productDiscount: '28% OFF',
+    floatTag1: '🥦 Farm Fresh',
+    floatTag2: '⚡ 2hr Delivery',
   },
   {
     id: 2,
@@ -31,6 +39,14 @@ const slides = [
     ],
     accent: '#f97316',
     bg: 'linear-gradient(135deg, #431407 0%, #7c2d12 30%, #9a3412 60%, #c2410c 100%)',
+    productImg: '/mega_sale.png',
+    productLabel: 'Special Deal',
+    productName: 'Premium Snack Platter',
+    productPrice: '₹299',
+    productOriginal: '₹499',
+    productDiscount: '40% OFF',
+    floatTag1: '🍇 Rich Taste',
+    floatTag2: '🔥 60% Max Off',
   },
   {
     id: 3,
@@ -46,6 +62,14 @@ const slides = [
     ],
     accent: '#6366f1',
     bg: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #3730a3 60%, #4338ca 100%)',
+    productImg: '/daily_essentials.png',
+    productLabel: 'Best Value',
+    productName: 'Morning Fresh Combo',
+    productPrice: '₹189',
+    productOriginal: '₹249',
+    productDiscount: '24% OFF',
+    floatTag1: '🥛 Pure Dairy',
+    floatTag2: '🍞 Fresh Sourdough',
   },
 ]
 
@@ -152,7 +176,31 @@ export default function Hero() {
           </div>
         </div>
 
+        {/* Right Visual */}
+        <div className={`hero__visual ${animating ? 'hero__content--exit' : 'hero__content--enter'}`}>
+          <div className="hero__product-card">
+            <div className="hero__product-img">
+              <img src={slide.productImg} alt={slide.productName} />
+            </div>
+            <div className="hero__product-info">
+              <span className="hero__product-label">{slide.productLabel}</span>
+              <h3 className="hero__product-name">{slide.productName}</h3>
+              <div className="hero__product-price">
+                <span className="price-current">{slide.productPrice}</span>
+                {slide.productOriginal && <span className="price-original">{slide.productOriginal}</span>}
+                {slide.productDiscount && <span className="price-badge">{slide.productDiscount}</span>}
+              </div>
+            </div>
+          </div>
 
+          {/* Floating tags */}
+          <div className="hero__float-tag hero__float-tag--1">
+            <span>{slide.floatTag1}</span>
+          </div>
+          <div className="hero__float-tag hero__float-tag--2">
+            <span>{slide.floatTag2}</span>
+          </div>
+        </div>
       </div>
 
       {/* Slider controls */}
