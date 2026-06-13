@@ -111,7 +111,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container hero__inner">
+      <div className="hero__inner">
         {/* Content */}
         <div className={`hero__content ${animating ? 'hero__content--exit' : 'hero__content--enter'}`}>
           {/* Badge */}
