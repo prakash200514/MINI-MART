@@ -328,3 +328,16 @@
   .topbar { display: none; }
   .search-bar--open .search-input { width: 130px; }
 }
+
+.admin-nav-indicator {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--orange-600);
+  background: #fef3c7;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  margin-right: 8px;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  letter-spacing: 0.02em;
+}
+
