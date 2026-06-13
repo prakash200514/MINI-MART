@@ -3,7 +3,7 @@ import './Footer.css'
 const footerLinks = {
   Shop: ['Fresh Produce', 'Dairy & Eggs', 'Bakery', 'Snacks & Beverages', 'Meat & Seafood', 'Frozen Foods', 'Organic Range'],
   Help: ['My Account', 'Track My Order', 'Returns & Refunds', 'FAQs', 'Contact Us', 'Store Locator'],
-  Company: ['About Mini Mart', 'Careers', 'Press & Media', 'Sustainability', 'Blog', 'Investor Relations'],
+  Company: ['About Mini Mart', 'Careers', 'Press & Media', 'Sustainability', 'Blog', 'Investor Relations', 'Admin Portal'],
 }
 
 const socialLinks = [
@@ -15,7 +15,7 @@ const socialLinks = [
 
 const paymentIcons = ['💳', '🏦', '📱', '💰', '🔐']
 
-export default function Footer() {
+export default function Footer({ onViewChange }) {
   return (
     <footer className="footer" id="footer" role="contentinfo">
       {/* App download banner */}
@@ -92,7 +92,17 @@ export default function Footer() {
               <ul className="footer__links">
                 {links.map(link => (
                   <li key={link}>
-                    <a href="#" className="footer__link">{link}</a>
+                    {link === 'Admin Portal' ? (
+                      <button
+                        onClick={() => onViewChange('admin')}
+                        className="footer__link"
+                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', font: 'inherit' }}
+                      >
+                        {link}
+                      </button>
+                    ) : (
+                      <a href="#" className="footer__link">{link}</a>
+                    )}
                   </li>
                 ))}
               </ul>
