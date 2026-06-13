@@ -180,7 +180,7 @@ export default function CartDrawer({ open, onClose, cart, onUpdateQuantity, onRe
                     Proceed to Checkout
                   </button>
                 </div>
-              </>
+              </div>
             )}
           </>
         )}
