@@ -94,12 +94,13 @@ function TimeUnit({ value, label }) {
   )
 }
 
-export default function Deals() {
+export default function Deals({ onAddToCart }) {
   const time = useCountdown(11)
   const [addedId, setAddedId] = useState(null)
 
   function handleAdd(id) {
     setAddedId(id)
+    onAddToCart(id)
     setTimeout(() => setAddedId(null), 1800)
   }
 

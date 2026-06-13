@@ -129,7 +129,15 @@ function App() {
   }, [orders])
 
   const handleAddToCart = (productId) => {
-    const product = products.find(p => p.id === productId)
+    let product = products.find(p => p.id === productId)
+    if (!product) {
+      const dealProducts = {
+        'deal-1': { id: 'deal-1', name: 'Premium Organic Basket', price: 449, emoji: '🥗' },
+        'deal-2': { id: 'deal-2', name: 'Dairy Combo Pack', price: 399, emoji: '🥛' },
+        'deal-3': { id: 'deal-3', name: 'Snack & Beverages Box', price: 699, emoji: '🍿' },
+      }
+      product = dealProducts[productId]
+    }
     if (!product) return
     setCart(prev => {
       const existing = prev.find(item => item.product.id === productId)
