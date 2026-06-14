@@ -1,1 +1,1 @@
-#🛒 MiniMar
+#🛒 MiniMa
