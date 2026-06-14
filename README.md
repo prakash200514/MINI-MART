@@ -1,1 +1,1 @@
-#🛒 MiniMa
+#🛒 MiniM
