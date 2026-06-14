@@ -1,1 +1,1 @@
-#🛒 MiniMart Pro - Supermarket Management 
+#🛒 MiniMart Pro - Supermarket 
