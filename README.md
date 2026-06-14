@@ -1,1 +1,1 @@
-#🛒 MiniM
+#🛒 Mini
