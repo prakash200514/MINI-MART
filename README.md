@@ -20,3 +20,6 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 
 *   **Slide Manager:** Edit storefront promotional slider images, headings, colors, subheadings, stats, and discount badges directly from the portal.
 *   **Order Tracker:** Monitor incoming customer orders, review cart items, total order values, and dynamically update order statuses (e.g., *Pending*, *Processing*, *Shipped*, *Delivered*).
+
+### 💾 Data Persistence
+*   **Offline Support:** Leverages browser `localStorage` to persist product inventory, slider configurations, and order records across page reloads.
