@@ -23,3 +23,9 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 
 ### 💾 Data Persistence
 *   **Offline Support:** Leverages browser `localStorage` to persist product inventory, slider configurations, and order records across page reloads.
+
+## 🛠️ Technology Stack
+*   **Framework:** [React 19](https://react.dev/)
+*   **Bundler & Dev Server:** [Vite 8](https://vite.dev/)
+*   **Styling:** Pure Vanilla CSS (custom stylesheets for each component to optimize performance and achieve custom aesthetics)
+*   **Icons & Emojis:** Native platform emojis for lightweight, clean visual indicators.
