@@ -6,3 +6,5 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 ## ✨ Features
 ### 🛍️ Customer Storefront
 *   **Dynamic Hero Slider:** Responsive interactive carousel featuring stats, floating highlights, and direct calls-to-action for current promotions and sales.
+
+*   **Smart Product Catalog:** Browse products by categories (Fresh, Organic, Dairy, Bakery, Snacks, Beverages, etc.) with real-time badges (organic, fresh, imported, etc.), pricing discounts, ratings, and reviews.
