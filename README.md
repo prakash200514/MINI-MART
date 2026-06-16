@@ -29,3 +29,40 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 *   **Bundler & Dev Server:** [Vite 8](https://vite.dev/)
 *   **Styling:** Pure Vanilla CSS (custom stylesheets for each component to optimize performance and achieve custom aesthetics)
 *   **Icons & Emojis:** Native platform emojis for lightweight, clean visual indicators.
+
+## 📂 Project Structure
+```text
+MINIMART/
+├── public/                # Static assets (images, logos, etc.)
+├── src/
+│   ├── components/        # Reusable visual components
+│   │   ├── Admin.jsx       # Admin Panel controls, CRUD, and Order processing
+│   │   ├── Admin.css       # Styling for the admin panel
+│   │   ├── CartDrawer.jsx  # Cart drawer sidebar component
+│   │   ├── CartDrawer.css  # Cart styling
+│   │   ├── Categories.jsx  # Category navigation grid
+│   │   ├── Categories.css  # Categories styling
+│   │   ├── Deals.jsx       # Special promotional packages
+│   │   ├── Deals.css       # Deals section styling
+│   │   ├── Features.jsx    # Supermarket value highlights
+│   │   ├── Features.css    # Highlights styling
+│   │   ├── Footer.jsx      # Bottom footer section
+│   │   ├── Footer.css      # Footer styling
+│   │   ├── Hero.jsx        # Homepage slideshow banner
+│   │   ├── Hero.css        # Slideshow styling
+│   │   ├── Navbar.jsx      # Responsive header navigation
+│   │   ├── Navbar.css      # Navbar styling
+│   │   ├── Newsletter.jsx  # Marketing subscription section
+│   │   ├── Newsletter.css  # Newsletter styling
+│   │   ├── Products.jsx    # Interactive product listing grid
+│   │   ├── Products.css    # Product grid styling
+│   │   ├── Testimonials.jsx# Customer reviews slider
+│   │   └── Testimonials.css# Testimonials styling
+│   ├── App.jsx            # Core application state orchestrator
+│   ├── App.css            # Global application layouts
+│   ├── index.css          # Design token definitions, variables & typography
+│   └── main.jsx           # Application entry point
+├── index.html             # Document markup & metadata headers
+├── package.json           # Project dependencies & script files
+└── vite.config.js         # Build system configuration
+```
