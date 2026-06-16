@@ -4,3 +4,5 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 
 
 ## ✨ Features
+### 🛍️ Customer Storefront
+*   **Dynamic Hero Slider:** Responsive interactive carousel featuring stats, floating highlights, and direct calls-to-action for current promotions and sales.
