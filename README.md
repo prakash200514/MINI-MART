@@ -95,3 +95,4 @@ npm run preview
 ```
 ## 📝 SEO and Optimization
 *   Includes custom semantic HTML5 structure.
+*   Pre-configured SEO meta tags, descriptions, and open graph markup in `index.html`.
