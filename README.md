@@ -81,3 +81,9 @@ npm install
 Start the development server:
 ```bash
 npm run dev
+
+By default, the application will run at [http://localhost:5173](http://localhost:5173). Open this URL in your web browser.
+### 4. Build for Production
+Generate optimized static assets ready for deployment:
+```bash
+npm run build
