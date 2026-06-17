@@ -93,3 +93,5 @@ Locally preview your production build:
 ```bash
 npm run preview
 ```
+## 📝 SEO and Optimization
+*   Includes custom semantic HTML5 structure.
