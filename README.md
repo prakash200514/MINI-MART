@@ -68,3 +68,5 @@ MINIMART/
 ```
 ## 🚀 Getting Started
 Follow these steps to run the application locally on your computer:
+### 1. Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) (version 18 or higher recommended) and npm installed.
