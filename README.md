@@ -96,3 +96,5 @@ npm run preview
 ## 📝 SEO and Optimization
 *   Includes custom semantic HTML5 structure.
 *   Pre-configured SEO meta tags, descriptions, and open graph markup in `index.html`.
+
+*   Uses fluid typography (Google Fonts - Outfit & Playfair Display) for modern, fast-loading, premium UI aesthetics.
