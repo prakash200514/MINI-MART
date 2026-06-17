@@ -76,3 +76,8 @@ Make sure you have [Node.js](https://nodejs.org/) (version 18 or higher recommen
 Clone or navigate to the repository directory and run:
 ```bash
 npm install
+
+## 3. Running Locally
+Start the development server:
+```bash
+npm run dev
