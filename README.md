@@ -87,3 +87,9 @@ By default, the application will run at [http://localhost:5173](http://localhost
 Generate optimized static assets ready for deployment:
 ```bash
 npm run build
+The output files will be located in the `dist/` directory.
+### 5. Preview Production Build
+Locally preview your production build:
+```bash
+npm run preview
+```
