@@ -2,12 +2,22 @@
 
 A modern, fast, and feature-rich React web application for a neighborhood supermarket. MiniMart Pro features an interactive customer storefront and an integrated administration panel for managing inventory, carousel configurations, and customer orders.
 
+<<<<<<< HEAD
 # ✨ Features
 ### 🛍️ Customer Storefront
 *   **Dynamic Hero Slider:** Responsive interactive carousel featuring stats, floating highlights, and direct calls-to-action for current promotions and sales.
 
 *   **Smart Product Catalog:** Browse products by categories (Fresh, Organic, Dairy, Bakery, Snacks, Beverages, etc.) with real-time badges (organic, fresh, imported, etc.), pricing discounts, ratings, and reviews.
 
+=======
+---
+
+## ✨ Features
+
+### 🛍️ Customer Storefront
+*   **Dynamic Hero Slider:** Responsive interactive carousel featuring stats, floating highlights, and direct calls-to-action for current promotions and sales.
+*   **Smart Product Catalog:** Browse products by categories (Fresh, Organic, Dairy, Bakery, Snacks, Beverages, etc.) with real-time badges (organic, fresh, imported, etc.), pricing discounts, ratings, and reviews.
+>>>>>>> 735bbba (merge remote main)
 *   **Interactive Cart Drawer:** Sliding shopping cart supporting quantity adjustments, item removal, and live order value computation.
 *   **Simulated Checkout:** Smooth checkout flow prompting for shipping/customer details to record orders.
 
@@ -16,20 +26,37 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
     *   Add new products with descriptions, prices, categories, emojis, and custom badges.
     *   Update existing product data in real-time.
     *   Delete products from the active catalog.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 735bbba (merge remote main)
 *   **Slide Manager:** Edit storefront promotional slider images, headings, colors, subheadings, stats, and discount badges directly from the portal.
 *   **Order Tracker:** Monitor incoming customer orders, review cart items, total order values, and dynamically update order statuses (e.g., *Pending*, *Processing*, *Shipped*, *Delivered*).
 
 ### 💾 Data Persistence
 *   **Offline Support:** Leverages browser `localStorage` to persist product inventory, slider configurations, and order records across page reloads.
 
+<<<<<<< HEAD
 ## 🛠️ Technology Stack
+=======
+---
+
+## 🛠️ Technology Stack
+
+>>>>>>> 735bbba (merge remote main)
 *   **Framework:** [React 19](https://react.dev/)
 *   **Bundler & Dev Server:** [Vite 8](https://vite.dev/)
 *   **Styling:** Pure Vanilla CSS (custom stylesheets for each component to optimize performance and achieve custom aesthetics)
 *   **Icons & Emojis:** Native platform emojis for lightweight, clean visual indicators.
 
+<<<<<<< HEAD
 ## 📂 Project Structure
+=======
+---
+
+## 📂 Project Structure
+
+>>>>>>> 735bbba (merge remote main)
 ```text
 MINIMART/
 ├── public/                # Static assets (images, logos, etc.)
@@ -65,16 +92,30 @@ MINIMART/
 ├── package.json           # Project dependencies & script files
 └── vite.config.js         # Build system configuration
 ```
+<<<<<<< HEAD
 ## 🚀 Getting Started
 Follow these steps to run the application locally on your computer:
 ### 1. Prerequisites
 Make sure you have [Node.js](https://nodejs.org/) (version 18 or higher recommended) and npm installed.
 
 
+=======
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to run the application locally on your computer:
+
+### 1. Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) (version 18 or higher recommended) and npm installed.
+
+>>>>>>> 735bbba (merge remote main)
 ### 2. Installation
 Clone or navigate to the repository directory and run:
 ```bash
 npm install
+<<<<<<< HEAD
 
 ## 3. Running Locally
 Start the development server:
@@ -82,18 +123,45 @@ Start the development server:
 npm run dev
 
 By default, the application will run at [http://localhost:5173](http://localhost:5173). Open this URL in your web browser.
+=======
+```
+
+### 3. Running Locally
+Start the development server:
+```bash
+npm run dev
+```
+By default, the application will run at [http://localhost:5173](http://localhost:5173). Open this URL in your web browser.
+
+>>>>>>> 735bbba (merge remote main)
 ### 4. Build for Production
 Generate optimized static assets ready for deployment:
 ```bash
 npm run build
+<<<<<<< HEAD
 The output files will be located in the `dist/` directory.
+=======
+```
+The output files will be located in the `dist/` directory.
+
+>>>>>>> 735bbba (merge remote main)
 ### 5. Preview Production Build
 Locally preview your production build:
 ```bash
 npm run preview
 ```
+<<<<<<< HEAD
 ## 📝 SEO and Optimization
 *   Includes custom semantic HTML5 structure.
 *   Pre-configured SEO meta tags, descriptions, and open graph markup in `index.html`.
 
+=======
+
+---
+
+## 📝 SEO and Optimization
+
+*   Includes custom semantic HTML5 structure.
+*   Pre-configured SEO meta tags, descriptions, and open graph markup in `index.html`.
+>>>>>>> 735bbba (merge remote main)
 *   Uses fluid typography (Google Fonts - Outfit & Playfair Display) for modern, fast-loading, premium UI aesthetics.
