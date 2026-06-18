@@ -106,28 +106,24 @@ export default function Hero({ slides }) {
 
         {/* Right Visual */}
         <div className={`hero__visual ${animating ? 'hero__content--exit' : 'hero__content--enter'}`}>
-          <div className="hero__product-card">
-            <div className="hero__product-img">
-              <img src={slide.productImg} alt={slide.productName} />
-            </div>
-            <div className="hero__product-info">
-              <span className="hero__product-label">{slide.productLabel}</span>
-              <h3 className="hero__product-name">{slide.productName}</h3>
-              <div className="hero__product-price">
-                <span className="price-current">{slide.productPrice}</span>
-                {slide.productOriginal && <span className="price-original">{slide.productOriginal}</span>}
-                {slide.productDiscount && <span className="price-badge">{slide.productDiscount}</span>}
-              </div>
+          <div className="hero__graphic-showcase">
+            <div className="hero__graphic-wrapper">
+              <img src={slide.productImg} alt={slide.productName} className="hero__graphic-img" />
+              <div className="hero__graphic-glow" style={{ background: slide.accent }} />
             </div>
           </div>
 
           {/* Floating tags */}
-          <div className="hero__float-tag hero__float-tag--1">
-            <span>{slide.floatTag1}</span>
-          </div>
-          <div className="hero__float-tag hero__float-tag--2">
-            <span>{slide.floatTag2}</span>
-          </div>
+          {slide.floatTag1 && (
+            <div className="hero__float-tag hero__float-tag--1">
+              <span>{slide.floatTag1}</span>
+            </div>
+          )}
+          {slide.floatTag2 && (
+            <div className="hero__float-tag hero__float-tag--2">
+              <span>{slide.floatTag2}</span>
+            </div>
+          )}
         </div>
       </div>
 
