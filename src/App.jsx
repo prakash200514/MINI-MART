@@ -101,32 +101,30 @@ const initialSlides = [
 
 function App() {
   const [view, setView] = useState('store')
-  const [products, setProducts] = useState(() => {
-    const saved = localStorage.getItem('mm_products')
-    return saved ? JSON.parse(saved) : initialProducts
-  })
-  const [slides, setSlides] = useState(() => {
-    const saved = localStorage.getItem('mm_slides')
-    return saved ? JSON.parse(saved) : initialSlides
-  })
-  const [orders, setOrders] = useState(() => {
-    const saved = localStorage.getItem('mm_orders')
-    return saved ? JSON.parse(saved) : []
-  })
+  const [products, setProducts] = useState([])
+  const [slides, setSlides] = useState([])
+  const [orders, setOrders] = useState([])
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
 
+  // Fetch initial data from Express + MongoDB backend
   useEffect(() => {
-    localStorage.setItem('mm_products', JSON.stringify(products))
-  }, [products])
-
-  useEffect(() => {
-    localStorage.setItem('mm_slides', JSON.stringify(slides))
-  }, [slides])
-
-  useEffect(() => {
-    localStorage.setItem('mm_orders', JSON.stringify(orders))
-  }, [orders])
+    async function initData() {
+      try {
+        const [prodRes, slideRes, orderRes] = await Promise.all([
+          fetch('/api/products'),
+          fetch('/api/slides'),
+          fetch('/api/orders')
+        ]);
+        if (prodRes.ok) setProducts(await prodRes.json());
+        if (slideRes.ok) setSlides(await slideRes.json());
+        if (orderRes.ok) setOrders(await orderRes.json());
+      } catch (err) {
+        console.error('Error connecting to backend API:', err);
+      }
+    }
+    initData();
+  }, []);
 
   const handleAddToCart = (productId) => {
     let product = products.find(p => p.id === productId)
@@ -170,7 +168,7 @@ function App() {
     setCart(prev => prev.filter(item => item.product.id !== productId))
   }
 
-  const handlePlaceOrder = (customer) => {
+  const handlePlaceOrder = async (customer) => {
     const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
     const newOrder = {
       id: `ord_${Date.now()}`,
@@ -186,34 +184,104 @@ function App() {
       date: new Date().toLocaleString(),
       status: 'Pending'
     }
-    setOrders(prev => [newOrder, ...prev])
-    setCart([])
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      });
+      if (res.ok) {
+        const savedOrder = await res.json();
+        setOrders(prev => [savedOrder, ...prev])
+        setCart([])
+      }
+    } catch (err) {
+      console.error('Error placing order:', err);
+    }
   }
 
   // Admin CRUD for products
-  const handleUpdateProduct = (updated) => {
-    setProducts(prev => prev.map(p => p.id === updated.id ? updated : p))
+  const handleUpdateProduct = async (updated) => {
+    try {
+      const res = await fetch(`/api/products/${updated.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const savedProd = await res.json();
+        setProducts(prev => prev.map(p => p.id === updated.id ? savedProd : p))
+      }
+    } catch (err) {
+      console.error('Error updating product:', err);
+    }
   }
 
-  const handleAddProduct = (newProd) => {
+  const handleAddProduct = async (newProd) => {
     const newId = `p_${Date.now()}`
-    setProducts(prev => [...prev, { ...newProd, id: newId }])
+    const productData = { ...newProd, id: newId }
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productData)
+      });
+      if (res.ok) {
+        const savedProd = await res.json();
+        setProducts(prev => [...prev, savedProd])
+      }
+    } catch (err) {
+      console.error('Error adding product:', err);
+    }
   }
 
-  const handleDeleteProduct = (productId) => {
-    setProducts(prev => prev.filter(p => p.id !== productId))
+  const handleDeleteProduct = async (productId) => {
+    try {
+      const res = await fetch(`/api/products/${productId}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        setProducts(prev => prev.filter(p => p.id !== productId))
+      }
+    } catch (err) {
+      console.error('Error deleting product:', err);
+    }
   }
 
   // Admin Slide edits
-  const handleUpdateSlide = (updatedSlide) => {
-    setSlides(prev => prev.map(s => s.id === updatedSlide.id ? updatedSlide : s))
+  const handleUpdateSlide = async (updatedSlide) => {
+    try {
+      const res = await fetch(`/api/slides/${updatedSlide.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedSlide)
+      });
+      if (res.ok) {
+        const savedSlide = await res.json();
+        setSlides(prev => prev.map(s => s.id === updatedSlide.id ? savedSlide : s))
+      }
+    } catch (err) {
+      console.error('Error updating slide:', err);
+    }
   }
 
   // Admin Order Status Update
-  const handleUpdateOrderStatus = (orderId, newStatus) => {
-    setOrders(prev =>
-      prev.map(ord => ord.id === orderId ? { ...ord, status: newStatus } : ord)
-    )
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        const savedOrder = await res.json();
+        setOrders(prev =>
+          prev.map(ord => ord.id === orderId ? savedOrder : ord)
+        )
+      }
+    } catch (err) {
+      console.error('Error updating order status:', err);
+    }
   }
 
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0)
