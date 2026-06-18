@@ -486,7 +486,7 @@ export default function Admin({
                         />
                       </div>
                       <div className="form-group">
-                        <label>Featured Product Name</label>
+                        <label>Featured Graphic Name (Alt Tag)</label>
                         <input
                           type="text"
                           value={editingSlide.productName}
@@ -495,7 +495,7 @@ export default function Admin({
                         />
                       </div>
                       <div className="form-group">
-                        <label>Featured Product Price</label>
+                        <label>Featured Graphic Price (Hidden in design)</label>
                         <input
                           type="text"
                           value={editingSlide.productPrice}
