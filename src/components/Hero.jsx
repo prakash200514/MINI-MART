@@ -1,14 +1,48 @@
 import './Hero.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export default function Hero({ slides }) {
   const [active, setActive] = useState(0)
   const [animating, setAnimating] = useState(false)
+  const heroRef = useRef(null)
 
   useEffect(() => {
     const timer = setInterval(() => goTo((active + 1) % slides.length), 5500)
     return () => clearInterval(timer)
   }, [active])
+
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return
+
+    const handleMouseMove = (e) => {
+      const { left, top, width, height } = hero.getBoundingClientRect()
+      const x = e.clientX - left
+      const y = e.clientY - top
+
+      // Normalize offsets from center (-0.5 to 0.5)
+      const normX = (x / width) - 0.5
+      const normY = (y / height) - 0.5
+
+      // Set CSS variables for tilt and parallax
+      hero.style.setProperty('--mouseX', normX)
+      hero.style.setProperty('--mouseY', normY)
+    }
+
+    const handleMouseLeave = () => {
+      // Reset values smoothly
+      hero.style.setProperty('--mouseX', 0)
+      hero.style.setProperty('--mouseY', 0)
+    }
+
+    hero.addEventListener('mousemove', handleMouseMove)
+    hero.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      hero.removeEventListener('mousemove', handleMouseMove)
+      hero.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [])
 
   function goTo(idx) {
     if (idx === active) return
@@ -22,7 +56,7 @@ export default function Hero({ slides }) {
   const slide = slides[active]
 
   return (
-    <section className="hero" id="home" aria-label="Hero banner">
+    <section className="hero" id="home" aria-label="Hero banner" ref={heroRef}>
       {/* Background */}
       <div
         className="hero__bg"
@@ -34,23 +68,29 @@ export default function Hero({ slides }) {
       <div className="hero__blob hero__blob--1" style={{ background: slide.accent }} />
       <div className="hero__blob hero__blob--2" />
 
-      {/* Floating vegetable particles */}
+      {/* Floating vegetable particles with Parallax Support */}
       <div className="hero__veggies" aria-hidden="true">
         {[
-          { emoji: '🥦', cls: 'v1' },
-          { emoji: '🍅', cls: 'v2' },
-          { emoji: '🥕', cls: 'v3' },
-          { emoji: '🌽', cls: 'v4' },
-          { emoji: '🥑', cls: 'v5' },
-          { emoji: '🍋', cls: 'v6' },
-          { emoji: '🫑', cls: 'v7' },
-          { emoji: '🍇', cls: 'v8' },
-          { emoji: '🧅', cls: 'v9' },
-          { emoji: '🍓', cls: 'v10' },
-          { emoji: '🥬', cls: 'v11' },
-          { emoji: '🍊', cls: 'v12' },
-        ].map(({ emoji, cls }) => (
-          <span key={cls} className={`hero__veggie hero__veggie--${cls}`}>{emoji}</span>
+          { emoji: '🥦', cls: 'v1', speed: -45 },
+          { emoji: '🍅', cls: 'v2', speed: 30 },
+          { emoji: '🥕', cls: 'v3', speed: -35 },
+          { emoji: '🌽', cls: 'v4', speed: 25 },
+          { emoji: '🥑', cls: 'v5', speed: -50 },
+          { emoji: '🍋', cls: 'v6', speed: 40 },
+          { emoji: '🫑', cls: 'v7', speed: -28 },
+          { emoji: '🍇', cls: 'v8', speed: 45 },
+          { emoji: '🧅', cls: 'v9', speed: -20 },
+          { emoji: '🍓', cls: 'v10', speed: 35 },
+          { emoji: '🥬', cls: 'v11', speed: -40 },
+          { emoji: '🍊', cls: 'v12', speed: 25 },
+        ].map(({ emoji, cls, speed }) => (
+          <span
+            key={cls}
+            className={`hero__veggie hero__veggie--${cls}`}
+            style={{ '--p-speed': `${speed}px` }}
+          >
+            <span className="hero__veggie-inner">{emoji}</span>
+          </span>
         ))}
       </div>
 
@@ -110,6 +150,7 @@ export default function Hero({ slides }) {
             <div className="hero__graphic-wrapper">
               <img src={slide.productImg} alt={slide.productName} className="hero__graphic-img" />
               <div className="hero__graphic-glow" style={{ background: slide.accent }} />
+              <div className="hero__graphic-shine" />
             </div>
           </div>
 
