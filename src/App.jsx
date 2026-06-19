@@ -108,10 +108,14 @@ function App() {
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
 
-  // Auth state
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('user')
-    return saved ? JSON.parse(saved) : null
+    try {
+      const saved = localStorage.getItem('user')
+      return saved ? JSON.parse(saved) : null
+    } catch (e) {
+      console.error('Error parsing user from localStorage:', e)
+      return null
+    }
   })
   const [token, setToken] = useState(() => localStorage.getItem('token') || null)
   const [authModalOpen, setAuthModalOpen] = useState(false)
