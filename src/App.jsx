@@ -390,6 +390,9 @@ function App() {
         onCartOpen={() => setCartOpen(true)}
         currentView={view}
         onViewChange={setView}
+        user={user}
+        onAuthClick={handleAuthClick}
+        onLogout={handleLogout}
       />
 
       {view === 'store' ? (
@@ -415,7 +418,7 @@ function App() {
         />
       )}
 
-      <Footer onViewChange={setView} />
+      <Footer onViewChange={setView} user={user} />
 
       <CartDrawer
         open={cartOpen}
@@ -424,6 +427,13 @@ function App() {
         onUpdateQuantity={handleUpdateCartQuantity}
         onRemove={handleRemoveFromCart}
         onCheckout={handlePlaceOrder}
+      />
+
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onAuthSuccess={handleAuthSuccess}
+        initialMode={authModalMode}
       />
     </div>
   )
