@@ -11,6 +11,7 @@ import Newsletter from './components/Newsletter'
 import Footer from './components/Footer'
 import CartDrawer from './components/CartDrawer'
 import Admin from './components/Admin'
+import AuthModal from './components/AuthModal'
 
 const initialProducts = [
   { id: 'p1', name: 'Red Apple Pack', category: 'Fresh', price: 149, original: 199, rating: 4.7, reviews: 520, emoji: '🍎', badge: 'Fresh', organic: true },
@@ -107,24 +108,105 @@ function App() {
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
 
-  // Fetch initial data from Express + MongoDB backend
+  // Auth state
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem('user')
+    return saved ? JSON.parse(saved) : null
+  })
+  const [token, setToken] = useState(() => localStorage.getItem('token') || null)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [authModalMode, setAuthModalMode] = useState('login')
+
+  // Verify token on mount
   useEffect(() => {
-    async function initData() {
+    async function verifyToken() {
+      const storedToken = localStorage.getItem('token')
+      if (storedToken) {
+        try {
+          const res = await fetch('/api/auth/me', {
+            headers: { 'Authorization': `Bearer ${storedToken}` }
+          })
+          if (res.ok) {
+            const data = await res.json()
+            setUser(data)
+            setToken(storedToken)
+          } else {
+            // Token expired or invalid, clear state and storage
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            setUser(null)
+            setToken(null)
+          }
+        } catch (err) {
+          console.error('Error verifying auth token:', err)
+        }
+      }
+    }
+    verifyToken()
+  }, [])
+
+  // Fetch initial public data from Express + MongoDB backend
+  useEffect(() => {
+    async function initPublicData() {
       try {
-        const [prodRes, slideRes, orderRes] = await Promise.all([
+        const [prodRes, slideRes] = await Promise.all([
           fetch('/api/products'),
-          fetch('/api/slides'),
-          fetch('/api/orders')
+          fetch('/api/slides')
         ]);
         if (prodRes.ok) setProducts(await prodRes.json());
         if (slideRes.ok) setSlides(await slideRes.json());
-        if (orderRes.ok) setOrders(await orderRes.json());
       } catch (err) {
         console.error('Error connecting to backend API:', err);
       }
     }
-    initData();
+    initPublicData();
   }, []);
+
+  // Fetch orders only if logged in as admin
+  useEffect(() => {
+    async function fetchOrders() {
+      if (user?.role === 'admin' && token) {
+        try {
+          const res = await fetch('/api/orders', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            setOrders(await res.json());
+          }
+        } catch (err) {
+          console.error('Error fetching orders:', err);
+        }
+      }
+    }
+    fetchOrders();
+  }, [user, token]);
+
+  // Redirect to store view if user is not admin and is on admin page
+  useEffect(() => {
+    if (view === 'admin' && user?.role !== 'admin') {
+      setView('store')
+    }
+  }, [view, user])
+
+  const handleAuthSuccess = (userData, userToken) => {
+    setUser(userData)
+    setToken(userToken)
+    localStorage.setItem('user', JSON.stringify(userData))
+    localStorage.setItem('token', userToken)
+  }
+
+  const handleLogout = () => {
+    setUser(null)
+    setToken(null)
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    setView('store')
+  }
+
+  const handleAuthClick = (mode) => {
+    setAuthModalMode(mode)
+    setAuthModalOpen(true)
+  }
 
   const handleAddToCart = (productId) => {
     let product = products.find(p => p.id === productId)
