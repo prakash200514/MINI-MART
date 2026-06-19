@@ -18,6 +18,16 @@ mongoose.connect(mongoURI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Mongoose Schemas & Models
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const User = mongoose.model('User', userSchema);
+
 const productSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
   name: { type: String, required: true },
@@ -190,6 +200,21 @@ async function seedDatabase() {
       await Slide.insertMany(initialSlides);
       console.log('Seeded initial slides to MongoDB');
     }
+
+    // Seed default admin user
+    const adminEmail = 'admin@minimart.com';
+    const adminExists = await User.findOne({ email: adminEmail });
+    if (!adminExists) {
+      const hashedPassword = await bcrypt.hash('admin123', 10);
+      const defaultAdmin = new User({
+        username: 'Admin User',
+        email: adminEmail,
+        password: hashedPassword,
+        role: 'admin'
+      });
+      await defaultAdmin.save();
+      console.log('Seeded default admin user (admin@minimart.com)');
+    }
   } catch (error) {
     console.error('Error seeding database:', error);
   }
@@ -198,6 +223,136 @@ async function seedDatabase() {
 seedDatabase();
 
 // REST API Endpoints
+
+// Auth Middleware
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) return res.status(401).json({ message: 'Access token required' });
+  
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ message: 'Invalid or expired token' });
+    req.user = decoded;
+    next();
+  });
+};
+
+const isAdmin = async (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(403).json({ message: 'Access denied: Admin role required' });
+  }
+};
+
+// Auth Endpoints
+app.post('/api/auth/register', async (req, res) => {
+  try {
+    const { username, email, password, adminCode } = req.body;
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'All fields (username, email, password) are required' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email address' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email is already registered' });
+    }
+
+    let role = 'user';
+    if (adminCode) {
+      if (adminCode === 'MINI_ADMIN_2026') {
+        role = 'admin';
+      } else {
+        return res.status(400).json({ message: 'Invalid Admin Security Code' });
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      role
+    });
+
+    await newUser.save();
+
+    const token = jwt.sign({ id: newUser._id, role: newUser.role }, JWT_SECRET, { expiresIn: '7d' });
+
+    res.status(201).json({
+      token,
+      user: {
+        id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+        role: newUser.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering user', error: error.message });
+  }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging in', error: error.message });
+  }
+});
+
+app.get('/api/auth/me', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving user details', error: error.message });
+  }
+});
+
 
 // Products Endpoints
 app.get('/api/products', async (req, res) => {
@@ -209,7 +364,7 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-app.post('/api/products', async (req, res) => {
+app.post('/api/products', authenticateToken, isAdmin, async (req, res) => {
   try {
     const newProduct = new Product(req.body);
     await newProduct.save();
@@ -219,7 +374,7 @@ app.post('/api/products', async (req, res) => {
   }
 });
 
-app.put('/api/products/:id', async (req, res) => {
+app.put('/api/products/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const updatedProduct = await Product.findOneAndUpdate(
       { id: req.params.id },
@@ -235,7 +390,7 @@ app.put('/api/products/:id', async (req, res) => {
   }
 });
 
-app.delete('/api/products/:id', async (req, res) => {
+app.delete('/api/products/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const deletedProduct = await Product.findOneAndDelete({ id: req.params.id });
     if (!deletedProduct) {
@@ -257,7 +412,7 @@ app.get('/api/slides', async (req, res) => {
   }
 });
 
-app.put('/api/slides/:id', async (req, res) => {
+app.put('/api/slides/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const updatedSlide = await Slide.findOneAndUpdate(
       { id: Number(req.params.id) },
@@ -274,7 +429,7 @@ app.put('/api/slides/:id', async (req, res) => {
 });
 
 // Orders Endpoints
-app.get('/api/orders', async (req, res) => {
+app.get('/api/orders', authenticateToken, isAdmin, async (req, res) => {
   try {
     const orders = await Order.find({}).sort({ date: -1 });
     res.json(orders);
@@ -293,7 +448,7 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
-app.put('/api/orders/:id', async (req, res) => {
+app.put('/api/orders/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const updatedOrder = await Order.findOneAndUpdate(
       { id: req.params.id },
