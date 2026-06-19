@@ -102,8 +102,8 @@ const initialSlides = [
 
 function App() {
   const [view, setView] = useState('store')
-  const [products, setProducts] = useState([])
-  const [slides, setSlides] = useState([])
+  const [products, setProducts] = useState(initialProducts)
+  const [slides, setSlides] = useState(initialSlides)
   const [orders, setOrders] = useState([])
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)

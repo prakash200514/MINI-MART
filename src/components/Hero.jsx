@@ -7,9 +7,10 @@ export default function Hero({ slides }) {
   const heroRef = useRef(null)
 
   useEffect(() => {
+    if (!slides || slides.length === 0) return
     const timer = setInterval(() => goTo((active + 1) % slides.length), 5500)
     return () => clearInterval(timer)
-  }, [active])
+  }, [active, slides])
 
   useEffect(() => {
     const hero = heroRef.current
@@ -51,6 +52,10 @@ export default function Hero({ slides }) {
       setActive(idx)
       setAnimating(false)
     }, 350)
+  }
+
+  if (!slides || slides.length === 0) {
+    return <div className="hero-loading" style={{ height: '70vh', background: 'var(--gray-900)' }}></div>
   }
 
   const slide = slides[active]
