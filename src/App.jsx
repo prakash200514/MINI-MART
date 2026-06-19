@@ -287,7 +287,10 @@ function App() {
     try {
       const res = await fetch(`/api/products/${updated.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(updated)
       });
       if (res.ok) {
@@ -305,7 +308,10 @@ function App() {
     try {
       const res = await fetch('/api/products', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(productData)
       });
       if (res.ok) {
@@ -320,7 +326,10 @@ function App() {
   const handleDeleteProduct = async (productId) => {
     try {
       const res = await fetch(`/api/products/${productId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
       });
       if (res.ok) {
         setProducts(prev => prev.filter(p => p.id !== productId))
@@ -335,7 +344,10 @@ function App() {
     try {
       const res = await fetch(`/api/slides/${updatedSlide.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(updatedSlide)
       });
       if (res.ok) {
@@ -352,7 +364,10 @@ function App() {
     try {
       const res = await fetch(`/api/orders/${orderId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ status: newStatus })
       });
       if (res.ok) {
