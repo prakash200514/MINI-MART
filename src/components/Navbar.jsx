@@ -10,7 +10,7 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
-export default function Navbar({ cartCount, onCartOpen, currentView, onViewChange }) {
+export default function Navbar({ cartCount, onCartOpen, currentView, onViewChange, user, onAuthClick, onLogout }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -33,7 +33,7 @@ export default function Navbar({ cartCount, onCartOpen, currentView, onViewChang
             <span>📞 1800-MINIMART</span>
           </div>
           <div className="topbar__right">
-            {currentView === 'store' ? (
+            {currentView === 'store' && user?.role === 'admin' ? (
               <>
                 <button onClick={() => onViewChange('admin')} className="topbar__link" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                   Admin Portal
@@ -41,9 +41,25 @@ export default function Navbar({ cartCount, onCartOpen, currentView, onViewChang
                 <span className="topbar__sep">|</span>
               </>
             ) : null}
-            <a href="#" className="topbar__link">Sign In</a>
-            <span className="topbar__sep">|</span>
-            <a href="#" className="topbar__link">Register</a>
+            {user ? (
+              <>
+                <span className="topbar__welcome" style={{ color: 'var(--green-400)', fontWeight: 600 }}>👤 Hello, {user.username}</span>
+                <span className="topbar__sep">|</span>
+                <button onClick={onLogout} className="topbar__link" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => onAuthClick('login')} className="topbar__link" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                  Sign In
+                </button>
+                <span className="topbar__sep">|</span>
+                <button onClick={() => onAuthClick('signup')} className="topbar__link" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                  Register
+                </button>
+              </>
+            )}
             <span className="topbar__sep">|</span>
             <a href="#" className="topbar__link">Track Order</a>
           </div>
@@ -147,10 +163,20 @@ export default function Navbar({ cartCount, onCartOpen, currentView, onViewChang
               </a>
             ))}
             <div className="mobile-menu__cta">
-              <button onClick={() => { setMenuOpen(false); onViewChange('admin'); }} className="btn btn-secondary w-full" style={{ marginBottom: '10px' }}>
-                Admin Portal
-              </button>
-              <a href="#" className="btn btn-primary">Sign In</a>
+              {user?.role === 'admin' && (
+                <button onClick={() => { setMenuOpen(false); onViewChange('admin'); }} className="btn btn-secondary w-full" style={{ marginBottom: '10px' }}>
+                  Admin Portal
+                </button>
+              )}
+              {user ? (
+                <button onClick={() => { setMenuOpen(false); onLogout(); }} className="btn btn-primary w-full">
+                  Sign Out
+                </button>
+              ) : (
+                <button onClick={() => { setMenuOpen(false); onAuthClick('login'); }} className="btn btn-primary w-full">
+                  Sign In / Register
+                </button>
+              )}
             </div>
           </div>
         )}

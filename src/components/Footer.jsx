@@ -15,7 +15,7 @@ const socialLinks = [
 
 const paymentIcons = ['💳', '🏦', '📱', '💰', '🔐']
 
-export default function Footer({ onViewChange }) {
+export default function Footer({ onViewChange, user }) {
   return (
     <footer className="footer" id="footer" role="contentinfo">
       {/* App download banner */}
@@ -90,21 +90,24 @@ export default function Footer({ onViewChange }) {
             <div key={heading} className="footer__links-col">
               <h3 className="footer__col-title">{heading}</h3>
               <ul className="footer__links">
-                {links.map(link => (
-                  <li key={link}>
-                    {link === 'Admin Portal' ? (
-                      <button
-                        onClick={() => onViewChange('admin')}
-                        className="footer__link"
-                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', font: 'inherit' }}
-                      >
-                        {link}
-                      </button>
-                    ) : (
-                      <a href="#" className="footer__link">{link}</a>
-                    )}
-                  </li>
-                ))}
+                {links.map(link => {
+                  if (link === 'Admin Portal' && user?.role !== 'admin') return null;
+                  return (
+                    <li key={link}>
+                      {link === 'Admin Portal' ? (
+                        <button
+                          onClick={() => onViewChange('admin')}
+                          className="footer__link"
+                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', font: 'inherit' }}
+                        >
+                          {link}
+                        </button>
+                      ) : (
+                        <a href="#" className="footer__link">{link}</a>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
