@@ -186,6 +186,25 @@ function App() {
     fetchOrders();
   }, [user, token]);
 
+  // Fetch users only if logged in as admin
+  useEffect(() => {
+    async function fetchUsers() {
+      if (user?.role === 'admin' && token) {
+        try {
+          const res = await fetch('/api/users', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            setUsers(await res.json());
+          }
+        } catch (err) {
+          console.error('Error fetching users:', err);
+        }
+      }
+    }
+    fetchUsers();
+  }, [user, token]);
+
   // Redirect to store view if user is not admin and is on admin page
   useEffect(() => {
     if (view === 'admin' && user?.role !== 'admin') {
