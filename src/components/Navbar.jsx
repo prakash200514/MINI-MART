@@ -128,6 +128,27 @@ export default function Navbar({ cartCount, onCartOpen, currentView, onViewChang
                   {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
                 </button>
 
+                {/* Desktop Auth Actions */}
+                <div className="navbar__auth-desktop">
+                  {user ? (
+                    <>
+                      <span className="navbar__username">👤 {user.username}</span>
+                      <button onClick={onLogout} className="btn btn-secondary btn-sm" aria-label="Sign out">
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button onClick={() => onAuthClick('login')} className="navbar__link" style={{ border: 'none', background: 'none', cursor: 'pointer', fontWeight: 600, padding: '8px 12px' }}>
+                        Sign In
+                      </button>
+                      <button onClick={() => onAuthClick('signup')} className="btn btn-primary btn-sm">
+                        Sign Up
+                      </button>
+                    </>
+                  )}
+                </div>
+
                 {/* Mobile menu toggle */}
                 <button
                   className={`hamburger ${menuOpen ? 'hamburger--open' : ''}`}
