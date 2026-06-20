@@ -104,10 +104,18 @@ export default function Admin({
           >
             📦 Orders {pendingOrders > 0 && <span className="badge-count">{pendingOrders}</span>}
           </button>
+          <button
+            className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => setActiveTab('users')}
+          >
+            👥 Users Management
+          </button>
         </nav>
         <div className="admin-sidebar-footer">
-          <p>Logged in as Admin</p>
-          <button className="btn-logout" onClick={() => setIsAuthenticated(false)}>Log Out</button>
+          <p style={{ fontSize: '0.8rem', opacity: 0.8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: '8px' }}>
+            👤 {currentUser?.username || 'Admin'}
+          </p>
+          <button className="btn-logout" onClick={onLogout}>Log Out</button>
         </div>
       </aside>
 
