@@ -40,7 +40,13 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, initialMode 
         body: JSON.stringify(bodyData),
       })
 
-      const data = await response.json()
+      let data = {}
+      const contentType = response.headers.get('content-type')
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json()
+      } else {
+        throw new Error('Connection refused. Please verify that your backend server is running (run: node server.js).')
+      }
 
       if (!response.ok) {
         throw new Error(data.message || 'Something went wrong')
