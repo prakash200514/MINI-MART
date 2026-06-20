@@ -354,6 +354,63 @@ app.get('/api/auth/me', authenticateToken, async (req, res) => {
 });
 
 
+// User Management Endpoints (Admin Only)
+app.get('/api/users', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const users = await User.find({}).select('-password').sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving users', error: error.message });
+  }
+});
+
+app.put('/api/users/:id/role', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { role } = req.body;
+    if (!['user', 'admin'].includes(role)) {
+      return res.status(400).json({ message: 'Invalid role specified' });
+    }
+
+    // Prevent self-demotion
+    if (req.params.id === req.user.id && role === 'user') {
+      return res.status(400).json({ message: 'Self-demotion is not allowed. You must remain an admin.' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { role },
+      { new: true }
+    ).select('-password');
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(400).json({ message: 'Error updating user role', error: error.message });
+  }
+});
+
+app.delete('/api/users/:id', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    // Prevent self-deletion
+    if (req.params.id === req.user.id) {
+      return res.status(400).json({ message: 'Self-deletion is not allowed.' });
+    }
+
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted successfully', id: req.params.id });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error: error.message });
+  }
+});
+
+
 // Products Endpoints
 app.get('/api/products', async (req, res) => {
   try {
