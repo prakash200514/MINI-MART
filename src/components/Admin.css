@@ -612,3 +612,16 @@
   font-weight: 600;
   margin-top: 8px;
 }
+
+/* User Management Panel Styles */
+.user-action-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.user-action-btns button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
