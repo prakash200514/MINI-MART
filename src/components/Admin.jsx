@@ -5,15 +5,17 @@ export default function Admin({
   products,
   slides,
   orders,
+  users = [],
+  currentUser,
+  onLogout,
   onAddProduct,
   onUpdateProduct,
   onDeleteProduct,
   onUpdateSlide,
-  onUpdateOrderStatus
+  onUpdateOrderStatus,
+  onUpdateUserRole,
+  onDeleteUser
 }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [password, setPassword] = useState('')
-  const [loginError, setLoginError] = useState('')
   const [activeTab, setActiveTab] = useState('dashboard')
 
   // Editing state for products
@@ -25,16 +27,6 @@ export default function Admin({
 
   // Editing state for slides
   const [editingSlide, setEditingSlide] = useState(null)
-
-  const handleLogin = (e) => {
-    e.preventDefault()
-    if (password === 'admin') {
-      setIsAuthenticated(true)
-      setLoginError('')
-    } else {
-      setLoginError('Invalid admin password. Try "admin".')
-    }
-  }
 
   // Calculate statistics
   const totalSales = orders.reduce((sum, ord) => ord.status !== 'Cancelled' ? sum + ord.total : sum, 0)
