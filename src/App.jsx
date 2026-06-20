@@ -476,11 +476,16 @@ function App() {
           products={products}
           slides={slides}
           orders={orders}
+          users={users}
+          currentUser={user}
+          onLogout={handleLogout}
           onAddProduct={handleAddProduct}
           onUpdateProduct={handleUpdateProduct}
           onDeleteProduct={handleDeleteProduct}
           onUpdateSlide={handleUpdateSlide}
           onUpdateOrderStatus={handleUpdateOrderStatus}
+          onUpdateUserRole={handleUpdateUserRole}
+          onDeleteUser={handleDeleteUser}
         />
       )}
 
