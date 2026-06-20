@@ -232,6 +232,48 @@ function App() {
     setAuthModalOpen(true)
   }
 
+  const handleUpdateUserRole = async (userId, newRole) => {
+    try {
+      const res = await fetch(`/api/users/${userId}/role`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ role: newRole })
+      });
+      if (res.ok) {
+        const savedUser = await res.json();
+        setUsers(prev => prev.map(u => u._id === userId || u.id === userId ? savedUser : u));
+      } else {
+        const data = await res.json();
+        alert(data.message || 'Error updating user role');
+      }
+    } catch (err) {
+      console.error('Error updating user role:', err);
+    }
+  }
+
+  const handleDeleteUser = async (userId) => {
+    if (!confirm('Are you sure you want to delete this user account?')) return;
+    try {
+      const res = await fetch(`/api/users/${userId}`, {
+        method: 'DELETE',
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (res.ok) {
+        setUsers(prev => prev.filter(u => u._id !== userId && u.id !== userId));
+      } else {
+        const data = await res.json();
+        alert(data.message || 'Error deleting user');
+      }
+    } catch (err) {
+      console.error('Error deleting user:', err);
+    }
+  }
+
   const handleAddToCart = (productId) => {
     let product = products.find(p => p.id === productId)
     if (!product) {
