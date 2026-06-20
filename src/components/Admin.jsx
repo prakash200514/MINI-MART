@@ -69,37 +69,7 @@ export default function Admin({
     setEditingSlide(null)
   }
 
-  if (!isAuthenticated) {
-    return (
-      <div className="admin-login-container">
-        <form className="admin-login-card" onSubmit={handleLogin}>
-          <div className="admin-login-logo">
-            <span>🛒</span>
-            <h2>MiniMart Admin</h2>
-          </div>
-          <p>Please log in using the administration password</p>
-          
-          <div className="form-group">
-            <label htmlFor="admin-pass">Password</label>
-            <input
-              type="password"
-              id="admin-pass"
-              placeholder="Enter admin password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              autoFocus
-            />
-          </div>
-          {loginError && <p className="login-error-msg">{loginError}</p>}
-          
-          <button type="submit" className="btn btn-primary w-full btn-lg" style={{ marginTop: '10px' }}>
-            Log In
-          </button>
-        </form>
-      </div>
-    )
-  }
+
 
   return (
     <div className="admin-panel">
