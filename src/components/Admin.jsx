@@ -565,6 +565,84 @@ export default function Admin({
             )}
           </div>
         )}
+
+        {/* Tab 5: Users Management */}
+        {activeTab === 'users' && (
+          <div className="tab-pane animate-fadeIn">
+            <div className="pane-header-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h2 className="admin-pane-title" style={{ margin: 0 }}>Users & Admin Management</h2>
+            </div>
+            
+            {users.length === 0 ? (
+              <p className="no-data-msg">No users registered yet.</p>
+            ) : (
+              <div className="table-responsive">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>User ID</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Joined Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map(u => {
+                      const uid = u._id || u.id;
+                      const isSelf = uid === currentUser?.id || uid === currentUser?._id || u.email === currentUser?.email;
+                      return (
+                        <tr key={uid}>
+                          <td><code>{uid}</code></td>
+                          <td style={{ fontWeight: 600 }}>{u.username} {isSelf && <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontStyle: 'italic' }}>(You)</span>}</td>
+                          <td>{u.email}</td>
+                          <td>
+                            <span className={`badge ${u.role === 'admin' ? 'badge-orange' : 'badge-green'}`} style={{ textTransform: 'uppercase', fontSize: '0.75rem' }}>
+                              {u.role}
+                            </span>
+                          </td>
+                          <td>{u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'N/A'}</td>
+                          <td>
+                            <div className="user-action-btns" style={{ display: 'flex', gap: '8px' }}>
+                              {u.role === 'admin' ? (
+                                <button
+                                  className="btn btn-secondary btn-sm"
+                                  onClick={() => onUpdateUserRole(uid, 'user')}
+                                  disabled={isSelf}
+                                  title={isSelf ? "You cannot demote yourself" : "Demote to standard user"}
+                                >
+                                  Demote to User
+                                </button>
+                              ) : (
+                                <button
+                                  className="btn btn-primary btn-sm"
+                                  onClick={() => onUpdateUserRole(uid, 'admin')}
+                                  title="Promote to admin"
+                                >
+                                  Make Admin
+                                </button>
+                              )}
+                              <button
+                                className="btn btn-accent btn-sm"
+                                style={{ background: 'var(--red-500)', boxShadow: 'none' }}
+                                onClick={() => onDeleteUser(uid)}
+                                disabled={isSelf}
+                                title={isSelf ? "You cannot delete yourself" : "Delete user account"}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   )
