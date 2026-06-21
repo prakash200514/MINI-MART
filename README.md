@@ -56,7 +56,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 
 ## 📂 Project Structure
 
->>>>>>> 735bbba (merge remote main)
+>>>>>> 735bbba (merge remote main)
 ```text
 MINIMART/
 ├── public/                # Static assets (images, logos, etc.)
