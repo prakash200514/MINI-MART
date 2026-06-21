@@ -101,7 +101,7 @@ Make sure you have [Node.js](https://nodejs.org/) (version 18 or higher recommen
 
 =======
 
----
+--
 
 ## 🚀 Getting Started
 
