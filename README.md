@@ -9,7 +9,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 
 *   **Smart Product Catalog:** Browse products by categories (Fresh, Organic, Dairy, Bakery, Snacks, Beverages, etc.) with real-time badges (organic, fresh, imported, etc.), pricing discounts, ratings, and reviews.
 
-=======
+=====
 ---
 
 ## ✨ Features
