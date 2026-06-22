@@ -36,7 +36,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 *   **Offline Support:** Leverages browser `localStorage` to persist product inventory, slider configurations, and order records across page reloads.
 
 <<<<<<< HEAD
-## 🛠️ Technology Stack
+# 🛠️ Technology Stack
 =======
 ---
 
