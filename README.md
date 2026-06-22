@@ -91,7 +91,7 @@ MINIMART/
 ├── package.json           # Project dependencies & script files
 └── vite.config.js         # Build system configuration
 ```
-<<<<<<< HEAD
+<<<<< HEAD
 ## 🚀 Getting Started
 Follow these steps to run the application locally on your computer:
 ### 1. Prerequisites
