@@ -27,7 +27,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
     *   Delete products from the active catalog.
 <<<< HEAD
 
-=======
+=====
 >>>>>>> 735bbba (merge remote main)
 *   **Slide Manager:** Edit storefront promotional slider images, headings, colors, subheadings, stats, and discount badges directly from the portal.
 *   **Order Tracker:** Monitor incoming customer orders, review cart items, total order values, and dynamically update order statuses (e.g., *Pending*, *Processing*, *Shipped*, *Delivered*).
