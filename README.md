@@ -25,7 +25,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
     *   Add new products with descriptions, prices, categories, emojis, and custom badges.
     *   Update existing product data in real-time.
     *   Delete products from the active catalog.
-<<<<< HEAD
+<<<< HEAD
 
 =======
 >>>>>>> 735bbba (merge remote main)
