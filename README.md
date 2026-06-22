@@ -50,7 +50,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 
 <<<<<<< HEAD
 ## 📂 Project Structure
-=======
+=====
 ---
 
 ## 📂 Project Structure
