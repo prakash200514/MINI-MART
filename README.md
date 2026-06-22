@@ -37,7 +37,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 
 <<<<<<< HEAD
 # 🛠️ Technology Stack
-=======
+======
 ---
 
 ## 🛠️ Technology Stack
