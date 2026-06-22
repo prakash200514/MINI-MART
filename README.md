@@ -20,7 +20,7 @@ A modern, fast, and feature-rich React web application for a neighborhood superm
 *   **Interactive Cart Drawer:** Sliding shopping cart supporting quantity adjustments, item removal, and live order value computation.
 *   **Simulated Checkout:** Smooth checkout flow prompting for shipping/customer details to record orders.
 
-### ⚙️ Administration Dashboard
+## ⚙️ Administration Dashboard
 *   **Product Inventory Management (CRUD):**
     *   Add new products with descriptions, prices, categories, emojis, and custom badges.
     *   Update existing product data in real-time.
