@@ -149,7 +149,7 @@ Locally preview your production build:
 ```bash
 npm run preview
 ```
-<<<<<<< HEAD
+<<<<< HEAD
 ## 📝 SEO and Optimization
 *   Includes custom semantic HTML5 structure.
 *   Pre-configured SEO meta tags, descriptions, and open graph markup in `index.html`.
